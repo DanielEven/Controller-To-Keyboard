@@ -1,0 +1,8 @@
+
+# Compiling outputs
+*.obj
+*.exe
+*.pdb
+
+# Code editor files
+.vscode/
