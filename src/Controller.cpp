@@ -1,6 +1,6 @@
 #include "Controller.hpp"
 
-boolean Controller::updateState()
+bool Controller::updateState()
 {
     XINPUT_STATE new_state;
 
@@ -34,7 +34,20 @@ Controller::Controller()
         this->connected = false;
     }
 }
-boolean Controller::isConnected()
+
+bool Controller::isConnected()
 {
     return this->connected;
+}
+
+bool Controller::isButtonPressed(WORD button)
+{
+    WORD pressed = this->state.Gamepad.wButtons;
+
+    WORD res = pressed & button;
+    if (res != 0)
+    {
+        return true;
+    }
+    return false;
 }
