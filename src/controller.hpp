@@ -27,6 +27,8 @@ public:
 
     // Gettting the State of the left stick.
     Point *getLeftStickState();
+    // Gettting the State of the right stick.
+    Point *getRightStickState();
 };
 
 /*

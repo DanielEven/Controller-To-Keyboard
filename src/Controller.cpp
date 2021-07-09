@@ -70,3 +70,13 @@ Point *Controller::getLeftStickState()
 
     return new Point(lx, ly);
 }
+
+Point *Controller::getRightStickState()
+{
+    this->updateState();
+
+    float rx = this->state.Gamepad.sThumbRX;
+    float ry = this->state.Gamepad.sThumbRY;
+
+    return new Point(rx, ry);
+}
