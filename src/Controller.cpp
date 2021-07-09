@@ -1,5 +1,7 @@
 #include "Controller.hpp"
 
+#define DEAD_ZONE 10000
+
 static const int controller_number = 1;
 
 Controller::Controller()
@@ -89,4 +91,52 @@ int Controller::getLeftTriggerState()
 int Controller::getRightTriggerState()
 {
     return (int)this->state.Gamepad.bRightTrigger;
+}
+
+Direction *Controller::getLeftStickDirection()
+{
+    Point *curr = this->getLeftStickState();
+
+    int dx = curr->x;
+    int dy = curr->y;
+
+    Direction *to = new Direction();
+
+    if (dx > DEAD_ZONE)
+        to->x = 1;
+
+    if (dx < -DEAD_ZONE)
+        to->x = -1;
+
+    if (dy > DEAD_ZONE)
+        to->y = 1;
+
+    if (dy < -DEAD_ZONE)
+        to->y = -1;
+
+    return to;
+}
+
+Direction *Controller::getRightStickDirection()
+{
+    Point *curr = this->getRightStickState();
+
+    int dx = curr->x;
+    int dy = curr->y;
+
+    Direction *to = new Direction();
+
+    if (dx > DEAD_ZONE)
+        to->x = 1;
+
+    if (dx < -DEAD_ZONE)
+        to->x = -1;
+
+    if (dy > DEAD_ZONE)
+        to->y = 1;
+
+    if (dy < -DEAD_ZONE)
+        to->y = -1;
+
+    return to;
 }

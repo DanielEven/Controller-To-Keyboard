@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <Xinput.h>
 #include "Point.hpp"
+#include "Direction.hpp"
 
 #pragma comment(lib, "Xinput.lib")
 
@@ -34,6 +35,12 @@ public:
     int getLeftTriggerState();
     // Getting the state of the right trigger control.
     int getRightTriggerState();
+
+    // A function that calculates what is the left stick's direction.
+    Direction *getLeftStickDirection();
+
+    // A function that calculates what is the right stick's direction.
+    Direction *getRightStickDirection();
 };
 
 /*
