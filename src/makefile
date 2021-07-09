@@ -2,7 +2,7 @@
 # Compiling
 
 output: Test.obj Controller.obj Point.obj
-	link *.obj
+	link *.obj /OUT:output.exe
 
 Test.obj: Test.cpp
 	cl /c /EHsc Test.cpp
@@ -11,7 +11,7 @@ Controller.obj: Controller.cpp
 	cl /c Controller.cpp
 
 Point.obj: Point.cpp
-	cl /c Point.cpp
+	cl /c /EHsc Point.cpp
 
 
 # Debugging
@@ -33,3 +33,4 @@ Point.pdb: Point.cpp
 
 clean:
 	del *.pdb *.exe *.obj *.ilk
+	cls
