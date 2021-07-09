@@ -10,3 +10,8 @@
 
 # Images
 Gamepad_Axis.png
+
+# Testers
+src/ControllerTest.cpp
+src/KeyboardManagerTest.cpp
+src/DirectionTest.cpp

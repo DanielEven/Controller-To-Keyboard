@@ -38,7 +38,6 @@ public:
 
     // A function that calculates what is the left stick's direction.
     Direction *getLeftStickDirection();
-
     // A function that calculates what is the right stick's direction.
     Direction *getRightStickDirection();
 };
