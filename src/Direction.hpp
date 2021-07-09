@@ -1,6 +1,6 @@
 #include "Point.hpp"
 
-class Direction : Point
+class Direction : public Point
 {
 public:
     Direction(int dx, int dy);
