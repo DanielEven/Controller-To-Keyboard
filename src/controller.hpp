@@ -29,6 +29,11 @@ public:
     Point *getLeftStickState();
     // Gettting the State of the right stick.
     Point *getRightStickState();
+
+    // Getting the state of the left trigger control.
+    int getLeftTriggerState();
+    // Getting the state of the right trigger control.
+    int getRightTriggerState();
 };
 
 /*

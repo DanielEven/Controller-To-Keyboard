@@ -80,3 +80,13 @@ Point *Controller::getRightStickState()
 
     return new Point(rx, ry);
 }
+
+int Controller::getLeftTriggerState()
+{
+    return (int)this->state.Gamepad.bLeftTrigger;
+}
+
+int Controller::getRightTriggerState()
+{
+    return (int)this->state.Gamepad.bRightTrigger;
+}
