@@ -10,18 +10,23 @@ private:
     XINPUT_STATE state;
     bool connected;
 
+    // Updating the controller's state.
+    // The function returns true if there is a change.
     bool updateState();
 
 public:
     Controller();
 
-    // Getting information about the controller.
+    /* Getting information about the controller. */
 
     // Checking if the controller is connected.
     bool isConnected();
 
-    // Checking if a specific button is pressed
+    // Checking if a specific button is pressed.
     bool isButtonPressed(WORD button);
+
+    // Gettting the State of the left stick.
+    Point *getLeftStickState();
 };
 
 /*

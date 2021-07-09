@@ -1,17 +1,6 @@
 #include "Controller.hpp"
 
-bool Controller::updateState()
-{
-    XINPUT_STATE new_state;
-
-    // Clear the new state memory.
-    ZeroMemory(&new_state, sizeof(XINPUT_STATE));
-
-    // Getting the new state.
-    XInputGetState(0, &new_state);
-
-    return (this->state.dwPacketNumber != new_state.dwPacketNumber);
-}
+static const int controller_number = 1;
 
 Controller::Controller()
 {
@@ -21,7 +10,7 @@ Controller::Controller()
     ZeroMemory(&this->state, sizeof(XINPUT_STATE));
 
     // Trying to connect.
-    dwResult = XInputGetState(0, &state);
+    dwResult = XInputGetState(controller_number, &state);
 
     if (dwResult == ERROR_SUCCESS)
     {
@@ -35,6 +24,24 @@ Controller::Controller()
     }
 }
 
+bool Controller::updateState()
+{
+    XINPUT_STATE new_state;
+
+    // Clear the new state memory.
+    ZeroMemory(&new_state, sizeof(XINPUT_STATE));
+
+    // Getting the new state.
+    XInputGetState(controller_number, &new_state);
+
+    bool change = (this->state.dwPacketNumber != new_state.dwPacketNumber);
+    if (change)
+    {
+        this->state = new_state;
+    }
+    return change;
+}
+
 bool Controller::isConnected()
 {
     return this->connected;
@@ -42,6 +49,8 @@ bool Controller::isConnected()
 
 bool Controller::isButtonPressed(WORD button)
 {
+    this->updateState();
+
     WORD pressed = this->state.Gamepad.wButtons;
 
     WORD res = pressed & button;
@@ -50,4 +59,14 @@ bool Controller::isButtonPressed(WORD button)
         return true;
     }
     return false;
+}
+
+Point *Controller::getLeftStickState()
+{
+    this->updateState();
+
+    float lx = this->state.Gamepad.sThumbLX;
+    float ly = this->state.Gamepad.sThumbLY;
+
+    return new Point(lx, ly);
 }
