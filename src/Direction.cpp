@@ -1,7 +1,11 @@
 #include "Direction.hpp"
 #include <stdexcept>
 
-Direction::Direction(int dx, int dy):Point(dx,dy)
+Direction::Direction() : Point()
+{
+}
+
+Direction::Direction(int dx, int dy) : Point(dx, dy)
 {
     if (dx > 1 || -1 > dx || dy > 1 || -1 > dy)
     {

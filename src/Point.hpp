@@ -7,6 +7,7 @@ class Point
 public:
     int x, y;
 
+    Point();
     Point(int nx, int ny);
 
     // Printing a Point.

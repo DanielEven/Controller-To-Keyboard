@@ -2,6 +2,12 @@
 
 using namespace std;
 
+Point::Point()
+{
+    this->x = 0;
+    this->y = 0;
+}
+
 Point::Point(int nx, int ny)
 {
     this->x = nx;
