@@ -6,9 +6,12 @@
 void updateButtons(Controller *c);
 void updateSticks(Controller *c);
 void updateTriggers(Controller *c);
+void printMessage();
 
 int main()
 {
+    printMessage();
+
     Controller *c = new Controller();
 
     while (!c->isButtonPressed(XINPUT_GAMEPAD_BACK))
@@ -254,4 +257,15 @@ void updateTriggers(Controller *c)
             moving_triggers_mapping['R'] = true;
         }
     }
+}
+
+void printMessage()
+{
+    cout << "*********************************************************" << endl
+         << "*************                               *************" << endl
+         << "************* Controller To Keyboard Mapper *************" << endl
+         << "*************                               *************" << endl
+         << "*************    Created by Daniel Even     *************" << endl
+         << "*************                               *************" << endl
+         << "*********************************************************" << endl;
 }
