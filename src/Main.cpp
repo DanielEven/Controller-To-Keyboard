@@ -5,6 +5,7 @@
 
 void updateButtons(Controller *c);
 void updateSticks(Controller *c);
+void updateTriggers(Controller *c);
 
 int main()
 {
@@ -14,6 +15,7 @@ int main()
     {
         updateButtons(c);
         updateSticks(c);
+        updateTriggers(c);
     }
 
     return 0;
@@ -191,6 +193,65 @@ void updateSticks(Controller *c)
             }
 
             moving_sticks_mapping[stick] = true;
+        }
+    }
+}
+
+// A map of the moving triggers.
+/*
+L - Left
+R - Right
+*/
+std::map<char, bool> moving_triggers_mapping = {
+    {'L', false},
+    {'R', false},
+};
+
+#define TRIGGER_DEAD_ZONE 100
+
+/*************************
+    This function updates the keyboard according to the controller's triggers.
+*************************/
+void updateTriggers(Controller *c)
+{
+
+    // Left trigger.
+    if (moving_triggers_mapping['L'] == true) // The left trigger is moving.
+    {
+        if (c->getLeftTriggerState() < TRIGGER_DEAD_ZONE)
+        {
+            // We stopped moving the trigger.
+            releaseKey(left_trigger_mapping);
+            moving_triggers_mapping['L'] = false;
+        }
+    }
+    else
+    {
+        // The trigger didn't moved.
+        if (c->getLeftTriggerState() > TRIGGER_DEAD_ZONE)
+        {
+            pressKey(left_trigger_mapping);
+            moving_triggers_mapping['L'] = true;
+        }
+    }
+
+    // Right trigger.
+    if (moving_triggers_mapping['R'] == true) // The right trigger is moving.
+    {
+        if (c->getRightTriggerState() < TRIGGER_DEAD_ZONE)
+        {
+            // We stopped moving the trigger.
+            releaseKey(right_trigger_mapping);
+            moving_triggers_mapping['R'] = false;
+        }
+    }
+    else
+    {
+        // The trigger didn't moved.
+        if (c->getRightTriggerState() > TRIGGER_DEAD_ZONE)
+        {
+            pressKey(right_trigger_mapping);
+            moving_triggers_mapping['R'] = true;
         }
     }
 }

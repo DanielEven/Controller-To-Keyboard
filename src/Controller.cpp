@@ -1,6 +1,6 @@
 #include "Controller.hpp"
 
-#define DEAD_ZONE 10000
+#define STICK_DEAD_ZONE 10000
 
 static const int controller_number = 0;
 
@@ -102,16 +102,16 @@ Direction *Controller::getLeftStickDirection()
 
     Direction *to = new Direction();
 
-    if (dx > DEAD_ZONE)
+    if (dx > STICK_DEAD_ZONE)
         to->x = 1;
 
-    if (dx < -DEAD_ZONE)
+    if (dx < -STICK_DEAD_ZONE)
         to->x = -1;
 
-    if (dy > DEAD_ZONE)
+    if (dy > STICK_DEAD_ZONE)
         to->y = 1;
 
-    if (dy < -DEAD_ZONE)
+    if (dy < -STICK_DEAD_ZONE)
         to->y = -1;
 
     return to;
@@ -126,16 +126,16 @@ Direction *Controller::getRightStickDirection()
 
     Direction *to = new Direction();
 
-    if (dx > DEAD_ZONE)
+    if (dx > STICK_DEAD_ZONE)
         to->x = 1;
 
-    if (dx < -DEAD_ZONE)
+    if (dx < -STICK_DEAD_ZONE)
         to->x = -1;
 
-    if (dy > DEAD_ZONE)
+    if (dy > STICK_DEAD_ZONE)
         to->y = 1;
 
-    if (dy < -DEAD_ZONE)
+    if (dy < -STICK_DEAD_ZONE)
         to->y = -1;
 
     return to;
