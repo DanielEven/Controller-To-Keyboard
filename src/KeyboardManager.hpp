@@ -12,8 +12,8 @@ bool pressKey(int key);
 // the keys are pressed according to the order of the array.
 bool pressMultipleKeys(std::vector<int> keys);
 
-// A function to hold a button without releasing it.
+// A function to hold a key without releasing it.
 bool holdKey(int key);
 
-// A function to release a button.
+// A function to release a key.
 bool releaseKey(int key);
