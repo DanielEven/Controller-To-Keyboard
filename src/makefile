@@ -8,16 +8,16 @@ Main.obj: Main.cpp
 	cl /c /EHsc /nologo Main.cpp
 
 Controller.obj: Controller.cpp
-	cl /c /nologo Controller.cpp
+	cl /c /EHsc /nologo Controller.cpp
 
 Point.obj: Point.cpp
 	cl /c /EHsc /nologo Point.cpp
 
 KeyboardManager.obj: KeyboardManager.cpp
-	cl /c /nologo KeyboardManager.cpp
+	cl /c /EHsc /nologo KeyboardManager.cpp
 
 Direction.obj: Direction.cpp
-	cl /c /nologo Direction.cpp
+	cl /c /EHsc /nologo Direction.cpp
 
 # Debugging
 
