@@ -4,6 +4,7 @@
 #include "Direction.hpp"
 
 #pragma comment(lib, "Xinput.lib")
+#pragma once
 
 class Controller
 {

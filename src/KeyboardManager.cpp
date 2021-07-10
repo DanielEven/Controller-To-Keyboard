@@ -40,3 +40,30 @@ bool pressMultipleKeys(std::vector<int> keys)
 
     return sent == arr_size;
 }
+
+bool holdKey(int key)
+{
+    INPUT inputs[1] = {};
+    ZeroMemory(inputs, sizeof(inputs));
+
+    inputs[0].type = INPUT_KEYBOARD;
+    inputs[0].ki.wVk = key;
+
+    UINT sent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+
+    return sent == ARRAYSIZE(inputs);
+}
+
+bool releaseKey(int key)
+{
+    INPUT inputs[1] = {};
+    ZeroMemory(inputs, sizeof(inputs));
+
+    inputs[0].type = INPUT_KEYBOARD;
+    inputs[0].ki.wVk = key;
+    inputs[0].ki.dwFlags = KEYEVENTF_KEYUP;
+
+    UINT sent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
+
+    return sent == ARRAYSIZE(inputs);
+}

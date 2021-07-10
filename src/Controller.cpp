@@ -2,7 +2,7 @@
 
 #define DEAD_ZONE 10000
 
-static const int controller_number = 1;
+static const int controller_number = 0;
 
 Controller::Controller()
 {
