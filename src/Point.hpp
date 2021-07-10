@@ -12,4 +12,7 @@ public:
 
     // Printing a Point.
     friend std::ostream &operator<<(std::ostream &o, Point const *p);
+
+    // A function to compare between points.
+    friend bool operator==(Point &left, const Point &right);
 };
