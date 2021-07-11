@@ -1,6 +1,8 @@
 #include "Controller.hpp"
 #include "Mapping.hpp"
 #include "KeyboardManager.hpp"
+#include "ConfigurationReader.hpp"
+
 #include <set>
 
 void updateButtons(Controller *c);
