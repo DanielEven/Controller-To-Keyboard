@@ -17,13 +17,17 @@ extern int right_trigger_mapping;
 
 void finishSetKeyNames();
 
-void setConfigurations()
+bool good_configuration = true;
+
+bool setConfigurations()
 {
     finishSetKeyNames();
 
     setButtonConfigurations();
     setStickConfigurations();
     setTriggerConfigurations();
+
+    return good_configuration;
 }
 
 // key names.
@@ -125,15 +129,22 @@ void setButtonConfigurations()
     file.open("config/button.conf");
 
     if (!file.is_open())
+    {
+        fileDoesNotExistMessage("config/button.conf");
         return;
+    }
 
     string line;
     while (std::getline(file, line))
     {
         vector<string> two = split(line, ' ');
+
+        if (two.size() == 0)
+            continue;
         if (two.size() != 2)
         {
-            wrongFileFormatException("config/button.conf");
+            wrongFileFormatMessage("config/button.conf");
+            return;
         }
 
         string button_name = two.at(0);
@@ -142,7 +153,10 @@ void setButtonConfigurations()
         WORD button = button_name_mapping[button_name];
         int key = key_name_mapping[key_name];
         if (button == 0 || key == 0)
-            wrongFileFormatException("config/button.conf");
+        {
+            wrongFileFormatMessage("config/button.conf");
+            return;
+        }
 
         button_mapping[button] = key;
     }
@@ -154,24 +168,34 @@ void setStickConfigurations()
     file.open("config/stick.conf");
 
     if (!file.is_open())
+    {
+        fileDoesNotExistMessage("config/stick.conf");
         return;
+    }
 
     string line;
     while (std::getline(file, line))
     {
-        vector<string> two = split(line, ' ');
-        if (two.size() != 3)
+        vector<string> three = split(line, ' ');
+
+        if (three.size() == 0)
+            continue;
+        if (three.size() != 3)
         {
-            wrongFileFormatException("config/stick.conf");
+            wrongFileFormatMessage("config/stick.conf");
+            return;
         }
 
-        string stick_name = two.at(0);
-        string dir_name = two.at(1);
-        string key_name = two.at(2);
+        string stick_name = three.at(0);
+        string dir_name = three.at(1);
+        string key_name = three.at(2);
 
         int key = key_name_mapping[key_name];
         if (key == 0)
-            wrongFileFormatException("config/stick.conf");
+        {
+            wrongFileFormatMessage("config/stick.conf");
+            return;
+        }
 
         if (stick_name == "Right")
         {
@@ -194,7 +218,8 @@ void setStickConfigurations()
 
             else
             {
-                wrongFileFormatException("config/stick.conf");
+                wrongFileFormatMessage("config/stick.conf");
+                return;
             }
         }
         else if (stick_name == "Left")
@@ -218,18 +243,66 @@ void setStickConfigurations()
 
             else
             {
-                wrongFileFormatException("config/stick.conf");
+                wrongFileFormatMessage("config/stick.conf");
+                return;
             }
         }
         else
         {
-            wrongFileFormatException("config/stick.conf");
+            wrongFileFormatMessage("config/stick.conf");
+            return;
         }
     }
 }
 
 void setTriggerConfigurations()
 {
+    ifstream file;
+    file.open("config/trigger.conf");
+
+    if (!file.is_open())
+    {
+        fileDoesNotExistMessage("config/trigger.conf");
+        return;
+    }
+
+    string line;
+    while (std::getline(file, line))
+    {
+        vector<string> two = split(line, ' ');
+
+        if (two.size() == 0)
+            continue;
+        if (two.size() != 2)
+        {
+            wrongFileFormatMessage("config/trigger.conf");
+            return;
+        }
+
+        string trigger = two.at(0);
+        string key_name = two.at(1);
+
+        int key = key_name_mapping[key_name];
+        if (key == 0)
+        {
+            wrongFileFormatMessage("config/trigger.conf");
+            return;
+        }
+
+        if (trigger == "Left")
+        {
+            left_trigger_mapping = key;
+        }
+        else if (trigger == "Right")
+        {
+            right_trigger_mapping = key;
+        }
+        else
+        {
+            wrongFileFormatMessage("config/trigger.conf");
+            return;
+        }
+    }
 }
 
 vector<string> split(const string &s, char delim)
@@ -246,7 +319,15 @@ vector<string> split(const string &s, char delim)
     return result;
 }
 
-void wrongFileFormatException(string filename)
+void fileDoesNotExistMessage(string filename)
 {
-    throw std::invalid_argument("The file format of " + filename + " is wrong!");
+    cout << "The file " << filename << " does not exit." << endl;
+    good_configuration = false;
+}
+
+void wrongFileFormatMessage(string filename)
+{
+    // throw std::invalid_argument("The file format of " + filename + " is wrong!");
+    cout << "The file format of " << filename << " is wrong." << endl;
+    good_configuration = false;
 }

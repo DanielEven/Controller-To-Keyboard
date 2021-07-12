@@ -15,7 +15,8 @@ int main()
     printMessage();
 
     // Reading and setting the configurations.
-    setConfigurations();
+    if (!setConfigurations())
+        return -1;
 
     Controller *c = new Controller();
 
