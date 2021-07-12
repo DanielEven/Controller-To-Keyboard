@@ -14,6 +14,9 @@ int main()
 {
     printMessage();
 
+    // Reading and setting the configurations.
+    setConfigurations();
+
     Controller *c = new Controller();
 
     while (!c->isButtonPressed(XINPUT_GAMEPAD_BACK))

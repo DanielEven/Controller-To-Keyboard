@@ -1,7 +1,7 @@
 
 # Compiling
 
-output: Main.obj Controller.obj Point.obj KeyboardManager.obj Direction.obj
+output: Main.obj Controller.obj Point.obj KeyboardManager.obj Direction.obj ConfigurationReader.obj
 	link *.obj /OUT:output.exe
 
 Main.obj: Main.cpp
@@ -19,9 +19,12 @@ KeyboardManager.obj: KeyboardManager.cpp
 Direction.obj: Direction.cpp
 	cl /c /EHsc /nologo Direction.cpp
 
+ConfigurationReader.obj: ConfigurationReader.cpp
+	cl /c /EHsc /nologo ConfigurationReader.cpp
+
 # Debugging
 
-debug: Main.pdb Controller.pdb Point.pdb KeyboardManager.pdb Direction.pdb
+debug: Main.pdb Controller.pdb Point.pdb KeyboardManager.pdb Direction.pdb ConfigurationReader.pdb
 	link *.obj
 
 Main.pdb: Main.cpp
@@ -38,6 +41,9 @@ KeyboardManager.pdb: KeyboardManager.cpp
 
 Direction.pdb: Direction.cpp
 	cl /c /Zi /EHsc /nologo /Fe Direction.cpp
+
+ConfigurationReader.pdb: ConfigurationReader.cpp
+	cl /c /Zi /EHsc /nologo /Fe ConfigurationReader.cpp
 
 # Cleaning
 
