@@ -23,8 +23,8 @@ void setTriggerConfigurations();
 
 // Helper functions.
 
-// A helper function to split a string with a delimiter.
-vector<string> split(const string &s, char delim);
+// A helper function to split a string, using any whitespace as a delimiter.
+vector<string> split(const string &s);
 
 // A helper function for the case when a configuration file doesn't exit.
 void fileDoesNotExistMessage(string filename);

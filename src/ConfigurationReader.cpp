@@ -137,7 +137,7 @@ void setButtonConfigurations()
     string line;
     while (std::getline(file, line))
     {
-        vector<string> two = split(line, ' ');
+        vector<string> two = split(line);
 
         if (two.size() == 0)
             continue;
@@ -176,7 +176,7 @@ void setStickConfigurations()
     string line;
     while (std::getline(file, line))
     {
-        vector<string> three = split(line, ' ');
+        vector<string> three = split(line);
 
         if (three.size() == 0)
             continue;
@@ -269,7 +269,7 @@ void setTriggerConfigurations()
     string line;
     while (std::getline(file, line))
     {
-        vector<string> two = split(line, ' ');
+        vector<string> two = split(line);
 
         if (two.size() == 0)
             continue;
@@ -305,13 +305,13 @@ void setTriggerConfigurations()
     }
 }
 
-vector<string> split(const string &s, char delim)
+vector<string> split(const string &s)
 {
     vector<string> result;
     std::stringstream ss(s);
     string item;
 
-    while (std::getline(ss, item, delim))
+    while (ss >> item)
     {
         result.push_back(item);
     }
