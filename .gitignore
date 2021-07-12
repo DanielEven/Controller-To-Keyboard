@@ -1,9 +1,9 @@
 
 # Compiling outputs
-*.obj
+src/*.obj
 src/*.exe
-*.pdb
-*.ilk
+src/*.pdb
+src/*.ilk
 
 # Code editor files
 .vscode/
