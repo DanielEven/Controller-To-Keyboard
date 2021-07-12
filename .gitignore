@@ -1,7 +1,7 @@
 
 # Compiling outputs
 *.obj
-*.exe
+src/*.exe
 *.pdb
 *.ilk
 
