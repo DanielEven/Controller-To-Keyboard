@@ -2,7 +2,7 @@
 # Compiling
 
 output: Main.obj Controller.obj Point.obj KeyboardManager.obj Direction.obj ConfigurationReader.obj
-	link *.obj /OUT:output.exe
+	link *.obj /OUT:ControllerToKeyboard.exe
 
 Main.obj: Main.cpp
 	cl /c /EHsc /nologo Main.cpp
