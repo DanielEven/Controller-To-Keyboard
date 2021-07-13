@@ -4,11 +4,15 @@
 #include "ConfigurationReader.hpp"
 
 #include <set>
+#include <time.h>
 
 void updateButtons(Controller *c);
 void updateSticks(Controller *c);
 void updateTriggers(Controller *c);
+void sleep(double mili);
 void printMessage();
+
+# define DELAY_BETWEEN_PRESSING 200
 
 int main()
 {
@@ -25,6 +29,8 @@ int main()
         updateButtons(c);
         updateSticks(c);
         updateTriggers(c);
+
+        sleep(DELAY_BETWEEN_PRESSING);
     }
 
     return 0;
@@ -70,7 +76,7 @@ void updateButtons(Controller *c)
         }
     }
 
-    //2
+    // 2
     for (auto iter = pressed_mapping.begin(); iter != pressed_mapping.end(); iter++)
     {
         WORD button = iter->first;
@@ -89,11 +95,8 @@ void updateButtons(Controller *c)
     for (auto iter = current.begin(); iter != current.end(); iter++)
     {
         WORD button = (*iter);
-        if (pressed_mapping[button] == false) // if the button isn't already pressed.
-        {
-            holdKey(button_mapping[button]);
-            pressed_mapping[button] = true;
-        }
+        holdKey(button_mapping[button]);
+        pressed_mapping[button] = true;
     }
 }
 
@@ -141,7 +144,7 @@ void updateSticks(Controller *c)
         }
     }
 
-    //2
+    // 2
     for (auto iter = moving_sticks_mapping.begin(); iter != moving_sticks_mapping.end(); iter++)
     {
         char stick = iter->first;
@@ -179,30 +182,27 @@ void updateSticks(Controller *c)
     for (auto iter = current.begin(); iter != current.end(); iter++)
     {
         char stick = (*iter);
-        if (moving_sticks_mapping[stick] == false) // if the button isn't already pressed.
+
+        Direction *dir;
+        switch (stick)
         {
-
-            Direction *dir;
-            switch (stick)
-            {
-            case 'R':
-                dir = c->getRightStickDirection();
-                if (dir->x != 0)
-                    holdKey(right_stick_x_mapping[dir->x]);
-                if (dir->y != 0)
-                    holdKey(right_stick_y_mapping[dir->y]);
-                break;
-            case 'L':
-                dir = c->getLeftStickDirection();
-                if (dir->x != 0)
-                    holdKey(left_stick_x_mapping[dir->x]);
-                if (dir->y != 0)
-                    holdKey(left_stick_y_mapping[dir->y]);
-                break;
-            }
-
-            moving_sticks_mapping[stick] = true;
+        case 'R':
+            dir = c->getRightStickDirection();
+            if (dir->x != 0)
+                holdKey(right_stick_x_mapping[dir->x]);
+            if (dir->y != 0)
+                holdKey(right_stick_y_mapping[dir->y]);
+            break;
+        case 'L':
+            dir = c->getLeftStickDirection();
+            if (dir->x != 0)
+                holdKey(left_stick_x_mapping[dir->x]);
+            if (dir->y != 0)
+                holdKey(left_stick_y_mapping[dir->y]);
+            break;
         }
+
+        moving_sticks_mapping[stick] = true;
     }
 }
 
@@ -224,7 +224,7 @@ std::map<char, bool> moving_triggers_mapping = {
 void updateTriggers(Controller *c)
 {
 
-    // Left trigger.
+    // Left trigger releasing.
     if (moving_triggers_mapping['L'] == true) // The left trigger is moving.
     {
         if (c->getLeftTriggerState() < TRIGGER_DEAD_ZONE)
@@ -234,17 +234,15 @@ void updateTriggers(Controller *c)
             moving_triggers_mapping['L'] = false;
         }
     }
-    else
+
+    // Left trigger holding.
+    if (c->getLeftTriggerState() > TRIGGER_DEAD_ZONE)
     {
-        // The trigger didn't moved.
-        if (c->getLeftTriggerState() > TRIGGER_DEAD_ZONE)
-        {
-            pressKey(left_trigger_mapping);
-            moving_triggers_mapping['L'] = true;
-        }
+        pressKey(left_trigger_mapping);
+        moving_triggers_mapping['L'] = true;
     }
 
-    // Right trigger.
+    // Right trigger releasing.
     if (moving_triggers_mapping['R'] == true) // The right trigger is moving.
     {
         if (c->getRightTriggerState() < TRIGGER_DEAD_ZONE)
@@ -254,15 +252,21 @@ void updateTriggers(Controller *c)
             moving_triggers_mapping['R'] = false;
         }
     }
-    else
+
+    // Right trigger holding.
+    if (c->getRightTriggerState() > TRIGGER_DEAD_ZONE)
     {
-        // The trigger didn't moved.
-        if (c->getRightTriggerState() > TRIGGER_DEAD_ZONE)
-        {
-            pressKey(right_trigger_mapping);
-            moving_triggers_mapping['R'] = true;
-        }
+        pressKey(right_trigger_mapping);
+        moving_triggers_mapping['R'] = true;
     }
+}
+
+void sleep(double mili)
+{
+    time_t now = clock();
+
+    while (clock() < now + mili)
+        ;
 }
 
 void printMessage()
