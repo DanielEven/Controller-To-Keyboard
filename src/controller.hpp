@@ -46,6 +46,11 @@ public:
     Direction *getLeftStickDirection();
     // A function that calculates what is the right stick's direction.
     Direction *getRightStickDirection();
+
+    // A function that makes a vibration in the controller.
+    // speed: the vibration speed, a number between 0 - 30000.
+    // time_mili: the time of vibration in mili seconds.
+    bool applyVibration(int speed, double time_mili);
 };
 
 /*

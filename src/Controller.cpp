@@ -158,3 +158,34 @@ Direction *Controller::getRightStickDirection()
 
     return to;
 }
+
+bool Controller::applyVibration(int speed, double time_mili)
+{
+    DWORD did_on, did_off;
+    XINPUT_VIBRATION on, off;
+    ZeroMemory(&on, sizeof(XINPUT_VIBRATION));
+    ZeroMemory(&off, sizeof(XINPUT_VIBRATION));
+
+    // The speed is too high.
+    if (speed > 30000)
+    {
+        return false;
+    }
+
+    // Setting up the vibration.
+    on.wLeftMotorSpeed = speed;
+    on.wRightMotorSpeed = speed;
+    off.wLeftMotorSpeed = 0;
+    off.wRightMotorSpeed = 0;
+
+    // Turnning the vibration on.
+    did_on = XInputSetState(this->getNumber(), &on);
+
+    // waiting.
+    Sleep(time_mili);
+
+    // Turnning the vibration off.
+    did_off = XInputSetState(this->getNumber(), &off);
+
+    return ERROR_SUCCESS == did_on && ERROR_SUCCESS == did_off;
+}

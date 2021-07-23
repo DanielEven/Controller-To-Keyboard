@@ -9,10 +9,9 @@
 void updateButtons(Controller *c);
 void updateSticks(Controller *c);
 void updateTriggers(Controller *c);
-void sleep(double mili);
 void printMessage();
 
-# define DELAY_BETWEEN_PRESSING 200
+#define DELAY_BETWEEN_PRESSING 200
 
 int main()
 {
@@ -30,8 +29,10 @@ int main()
         updateSticks(c);
         updateTriggers(c);
 
-        sleep(DELAY_BETWEEN_PRESSING);
+        Sleep(DELAY_BETWEEN_PRESSING);
     }
+
+    c->applyVibration(10000, 400);
 
     return 0;
 }
@@ -259,14 +260,6 @@ void updateTriggers(Controller *c)
         pressKey(right_trigger_mapping);
         moving_triggers_mapping['R'] = true;
     }
-}
-
-void sleep(double mili)
-{
-    time_t now = clock();
-
-    while (clock() < now + mili)
-        ;
 }
 
 void printMessage()
