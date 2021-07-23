@@ -2,7 +2,11 @@
 
 #define STICK_DEAD_ZONE 10000
 
-static const int controller_number = 0;
+static std::map<int, bool> connected_controllers = {
+    {0, false},
+    {1, false},
+    {2, false},
+    {3, false}};
 
 Controller::Controller()
 {
@@ -11,19 +15,28 @@ Controller::Controller()
     // Clear the state memory.
     ZeroMemory(&this->state, sizeof(XINPUT_STATE));
 
-    // Trying to connect.
-    dwResult = XInputGetState(controller_number, &state);
+    // Trying to connect to one of the controllers.
+    for (auto iter = connected_controllers.begin(); iter != connected_controllers.end(); iter++)
+    {
+        int num = iter->first;
+        if (connected_controllers[num] == false)
+        {
+            dwResult = XInputGetState(num, &state);
 
-    if (dwResult == ERROR_SUCCESS)
-    {
-        // The controller is connected.
-        this->connected = true;
+            if (dwResult == ERROR_SUCCESS)
+            {
+                // The controller is now connected.
+                this->connected = true;
+                this->number = num;
+                connected_controllers[num] = true;
+
+                return;
+            }
+        }
     }
-    else
-    {
-        // The controller is not connected.
-        this->connected = false;
-    }
+
+    // The controller is not connected.
+    this->connected = false;
 }
 
 bool Controller::updateState()
@@ -34,7 +47,7 @@ bool Controller::updateState()
     ZeroMemory(&new_state, sizeof(XINPUT_STATE));
 
     // Getting the new state.
-    XInputGetState(controller_number, &new_state);
+    XInputGetState(this->getNumber(), &new_state);
 
     bool change = (this->state.dwPacketNumber != new_state.dwPacketNumber);
     if (change)
@@ -47,6 +60,11 @@ bool Controller::updateState()
 bool Controller::isConnected()
 {
     return this->connected;
+}
+
+int Controller::getNumber()
+{
+    return this->number;
 }
 
 bool Controller::isButtonPressed(WORD button)

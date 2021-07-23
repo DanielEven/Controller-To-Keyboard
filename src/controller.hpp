@@ -2,6 +2,7 @@
 #include <Xinput.h>
 #include "Point.hpp"
 #include "Direction.hpp"
+#include <map>
 
 #pragma comment(lib, "Xinput.lib")
 #pragma once
@@ -11,6 +12,7 @@ class Controller
 private:
     XINPUT_STATE state;
     bool connected;
+    int number;
 
     // Updating the controller's state.
     // The function returns true if there is a change.
@@ -23,6 +25,9 @@ public:
 
     // Checking if the controller is connected.
     bool isConnected();
+
+    // Getting the controller's number
+    int getNumber();
 
     // Checking if a specific button is pressed.
     bool isButtonPressed(WORD button);
