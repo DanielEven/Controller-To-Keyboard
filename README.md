@@ -1,4 +1,7 @@
 # Controller-To-Keyboard🎮⌨
+
+> :warning: **The use of the software is at your own risk:** espacially using high game controller vibration rates. <br />
+
 This is a program to use a game controller as a keyboard, written in c++ using the windows API.<br />
 The program uses the _Xipnut.h_ library in order to get inputs from the game controller. The program uses _windows.h_ in order to simulate to keyboard pressing.
 ## How to use the program
